@@ -1,18 +1,18 @@
-import ApolloClientPackage from '@apollo/client';
+import ApolloClientPackage from "@apollo/client";
 
-const { ApolloClient, InMemoryCache, ApolloProvider, gql } = ApolloClientPackage;
+const { ApolloClient, InMemoryCache, ApolloProvider, gql } =
+  ApolloClientPackage;
 
-main()
+main();
 
 async function main() {
-    const client = new ApolloClient({
-        uri: 'https://flyby-router-demo.herokuapp.com/',
-        cache: new InMemoryCache(),
-    });
+  const client = new ApolloClient({
+    uri: "https://flyby-router-demo.herokuapp.com/",
+    cache: new InMemoryCache(),
+  });
 
-    const result = await client
-        .query({
-            query: gql`
+  const result = await client.query({
+    query: gql`
       query GetLocations {
         locations {
           id
@@ -21,7 +21,7 @@ async function main() {
           photo
         }
       }
-    `
-        })
-    console.log(JSON.stringify(result, null, 2))
+    `,
+  });
+  console.log(JSON.stringify(result, null, 2));
 }
