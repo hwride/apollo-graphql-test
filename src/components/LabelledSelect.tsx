@@ -8,8 +8,13 @@ type LabelledSelectProps = SelectHTMLAttributes<HTMLSelectElement> & {
   selectClassName?: string
 }
 
+let id = 0
+function getNextId() {
+  return String(id++)
+}
+
 export function LabelledSelect({
-  id,
+  id = getNextId(),
   label,
   value,
   children,
