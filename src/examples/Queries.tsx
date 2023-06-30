@@ -69,30 +69,18 @@ function QueriesInner() {
     }
   )
 
+  console.group('Queries render')
   const networkStatusName = NetworkStatus[networkStatus]
+  console.log(
+    `locationId: ${locationId}, pollInterval: ${pollInterval}, fetchPolicy: ${fetchPolicy}` +
+      `, nextFetchPolicy: ${nextFetchPolicy}, notifyOnNetworkStatusChange: ${notifyOnNetworkStatusChange}`
+  )
   console.log(
     `loading: ${loading}, networkStatus: ${networkStatusName} (${networkStatus}), data: %o, error: %o`,
     data,
     error
   )
-
-  let dataContent = data ? (
-    <div key={data.location.id}>
-      <h3>{data.location.name}</h3>
-      <img
-        width="400"
-        height="250"
-        alt="location-reference"
-        src={data.location.photo}
-      />
-      <br />
-      <b>About this location:</b>
-      <p>{data.location.description}</p>
-      <br />
-    </div>
-  ) : (
-    data
-  )
+  console.groupEnd()
 
   return (
     <Page title="Queries">
@@ -151,7 +139,7 @@ function QueriesInner() {
           <code>refetch()</code>
         </BorderButton>
       </ControlGrid>
-      <dl className="mx-auto my-2 grid w-[300px] grid-cols-2">
+      <dl className="mx-auto my-2 grid w-[500px] grid-cols-2">
         <dt>
           <code>loading</code>
         </dt>
@@ -164,8 +152,32 @@ function QueriesInner() {
           <code>error</code>
         </dt>
         <dd>{error === undefined ? 'undefined' : error.message}</dd>
+        <dt>
+          <code>data</code>
+        </dt>
+        <dd>
+          {data === undefined ? (
+            'undefined'
+          ) : (
+            <code>{`{ location: { id: ${data.location.id} } }`}</code>
+          )}
+        </dd>
       </dl>
-      {dataContent}
+      {data && (
+        <div key={data.location.id}>
+          <h3>{data.location.name}</h3>
+          <img
+            width="400"
+            height="250"
+            alt="location-reference"
+            src={data.location.photo}
+          />
+          <br />
+          <b>About this location:</b>
+          <p>{data.location.description}</p>
+          <br />
+        </div>
+      )}
     </Page>
   )
 }
