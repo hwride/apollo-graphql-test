@@ -22,6 +22,17 @@ const GET_LOCATION = gql`
   }
 `
 
+const fetchPolicies = (
+  <>
+    <option value="cache-first">cache-first</option>
+    <option value="cache-only">cache-only</option>
+    <option value="cache-and-network">cache-and-network</option>
+    <option value="network-only">network-only</option>
+    <option value="no-cache">no-cache</option>
+    <option value="standby">standby</option>
+  </>
+)
+
 export function Queries() {
   const client = new ApolloClient({
     uri: 'https://flyby-router-demo.herokuapp.com/',
@@ -37,8 +48,10 @@ export function Queries() {
 function QueriesInner() {
   const [locationId, setLocationId] = useState('loc-1')
   const [fetchPolicy, setFetchPolicy] = useState('cache-first')
+  const [nextFetchPolicy, setNextFetchPolicy] = useState('cache-first')
   const { loading, error, data } = useQuery(GET_LOCATION, {
     fetchPolicy: fetchPolicy as WatchQueryFetchPolicy, // Used for first execution
+    nextFetchPolicy: nextFetchPolicy as WatchQueryFetchPolicy, // Used for subsequent executions
     variables: { locationId },
   })
 
@@ -80,17 +93,20 @@ function QueriesInner() {
           <option value="loc-5">loc-5</option>
         </LabelledSelect>
         <LabelledSelect
-          label={<code>fetch-policy</code>}
+          label={<code>fetchPolicy</code>}
           selectClassName="font-mono"
           value={fetchPolicy}
           onOptionChange={setFetchPolicy}
         >
-          <option value="cache-first">cache-first</option>
-          <option value="cache-only">cache-only</option>
-          <option value="cache-and-network">cache-and-network</option>
-          <option value="network-only">network-only</option>
-          <option value="no-cache">no-cache</option>
-          <option value="standby">standby</option>
+          {fetchPolicies}
+        </LabelledSelect>
+        <LabelledSelect
+          label={<code>nextFetchPolicy</code>}
+          selectClassName="font-mono"
+          value={nextFetchPolicy}
+          onOptionChange={setNextFetchPolicy}
+        >
+          {fetchPolicies}
         </LabelledSelect>
       </ControlGrid>
       {resultContent}
