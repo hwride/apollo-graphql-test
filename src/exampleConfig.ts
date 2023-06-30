@@ -4,8 +4,8 @@ import { Queries } from './examples/Queries.tsx'
 export type ConfigEntry = { id: string; label: string; Component: React.FC }
 export const componentConfig: ConfigEntry[] = [
   {
-    id: 'apollo_docs_getting_started',
-    label: 'Apollo docs getting started',
+    id: 'apollo_getting_started',
+    label: 'Apollo getting started',
     Component: ApolloDocsGettingStarted,
   },
   {
