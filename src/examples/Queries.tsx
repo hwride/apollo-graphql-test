@@ -163,21 +163,6 @@ function QueriesInner() {
           )}
         </dd>
       </dl>
-      {data && (
-        <div key={data.location.id}>
-          <h3>{data.location.name}</h3>
-          <img
-            width="400"
-            height="250"
-            alt="location-reference"
-            src={data.location.photo}
-          />
-          <br />
-          <b>About this location:</b>
-          <p>{data.location.description}</p>
-          <br />
-        </div>
-      )}
     </Page>
   )
 }
