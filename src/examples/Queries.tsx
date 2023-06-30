@@ -71,54 +71,32 @@ function QueriesInner() {
 
   const networkStatusName = NetworkStatus[networkStatus]
   console.log(
-    `loading: ${loading}, networkStatus: ${networkStatusName} (${networkStatus}), data: %o`,
+    `loading: ${loading}, networkStatus: ${networkStatusName} (${networkStatus}), data: %o, error: %o`,
+    data,
+    error
+  )
+
+  let dataContent = data ? (
+    <div key={data.location.id}>
+      <h3>{data.location.name}</h3>
+      <img
+        width="400"
+        height="250"
+        alt="location-reference"
+        src={data.location.photo}
+      />
+      <br />
+      <b>About this location:</b>
+      <p>{data.location.description}</p>
+      <br />
+    </div>
+  ) : (
     data
   )
 
-  let resultContent
-  if (loading) resultContent = <p>Loading...</p>
-  else if (error) resultContent = <p>Error : {error.message}</p>
-  else {
-    const { id, name, description, photo } = data.location
-    resultContent = (
-      <div key={id}>
-        <h3>{name}</h3>
-        <img
-          width="400"
-          height="250"
-          alt="location-reference"
-          src={`${photo}`}
-        />
-        <br />
-        <b>About this location:</b>
-        <p>{description}</p>
-        <br />
-      </div>
-    )
-  }
-
   return (
     <Page title="Queries">
-      <PageParagraph>
-        This is a test of different Apollo Client query options.
-      </PageParagraph>
-      <PageParagraph>
-        When <code>notifyOnNetworkStatusChange</code> is false the component
-        will not re-render when fetching with an update <code>loading</code> or{' '}
-        <code>networkStatus</code> attribute for either polling or refetch.
-      </PageParagraph>
-      <PageParagraph>
-        Note when <code>notifyOnNetworkStatusChange</code> is true and the
-        component re-renders while data is being fetched, the old data remains
-        available in <code>data</code>.
-      </PageParagraph>
-      <PageParagraph>
-        But also notice that regardless of the value of{' '}
-        <code>notifyOnNetworkStatusChange</code> the component will re-render
-        and <code>loading</code> will change when you submit a new ID. This
-        seems to suggest the disabling of re-renders by default for subsequent
-        fetches only applies to objects already requested.
-      </PageParagraph>
+      <Docs />
       <ControlGrid>
         <LabelledSelect
           label="Location ID"
@@ -173,7 +151,48 @@ function QueriesInner() {
           <code>refetch()</code>
         </BorderButton>
       </ControlGrid>
-      {resultContent}
+      <dl className="mx-auto my-2 grid w-[300px] grid-cols-2">
+        <dt>
+          <code>loading</code>
+        </dt>
+        <dd>{JSON.stringify(loading)}</dd>
+        <dt>
+          <code>networkStatus</code>
+        </dt>
+        <dd>Network {`${networkStatusName} (${networkStatus})`}</dd>
+        <dt>
+          <code>error</code>
+        </dt>
+        <dd>{error === undefined ? 'undefined' : error.message}</dd>
+      </dl>
+      {dataContent}
     </Page>
+  )
+}
+
+function Docs() {
+  return (
+    <>
+      <PageParagraph>
+        This is a test of different Apollo Client query options.
+      </PageParagraph>
+      <PageParagraph>
+        When <code>notifyOnNetworkStatusChange</code> is false the component
+        will not re-render when fetching with an update <code>loading</code> or{' '}
+        <code>networkStatus</code> attribute for either polling or refetch.
+      </PageParagraph>
+      <PageParagraph>
+        Note when <code>notifyOnNetworkStatusChange</code> is true and the
+        component re-renders while data is being fetched, the old data remains
+        available in <code>data</code>.
+      </PageParagraph>
+      <PageParagraph>
+        But also notice that regardless of the value of{' '}
+        <code>notifyOnNetworkStatusChange</code> the component will re-render
+        and <code>loading</code> will change when you submit a new ID. This
+        seems to suggest the disabling of re-renders by default for subsequent
+        fetches only applies to objects already requested.
+      </PageParagraph>
+    </>
   )
 }
