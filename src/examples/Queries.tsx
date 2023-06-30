@@ -2,6 +2,7 @@ import {
   ApolloClient,
   ApolloProvider,
   InMemoryCache,
+  WatchQueryFetchPolicy,
   gql,
   useQuery,
 } from '@apollo/client'
@@ -35,8 +36,10 @@ export function Queries() {
 
 function QueriesInner() {
   const [locationId, setLocationId] = useState('loc-1')
+  const [fetchPolicy, setFetchPolicy] = useState('cache-first')
   const { loading, error, data } = useQuery(GET_LOCATION, {
-    variables: { locationId: locationId },
+    fetchPolicy: fetchPolicy as WatchQueryFetchPolicy, // Used for first execution
+    variables: { locationId },
   })
 
   let resultContent
@@ -66,6 +69,7 @@ function QueriesInner() {
       <ControlGrid>
         <LabelledSelect
           label="Location ID"
+          selectClassName="font-mono"
           value={locationId}
           onOptionChange={setLocationId}
         >
@@ -74,6 +78,19 @@ function QueriesInner() {
           <option value="loc-3">loc-3</option>
           <option value="loc-4">loc-4</option>
           <option value="loc-5">loc-5</option>
+        </LabelledSelect>
+        <LabelledSelect
+          label={<code>fetch-policy</code>}
+          selectClassName="font-mono"
+          value={fetchPolicy}
+          onOptionChange={setFetchPolicy}
+        >
+          <option value="cache-first">cache-first</option>
+          <option value="cache-only">cache-only</option>
+          <option value="cache-and-network">cache-and-network</option>
+          <option value="network-only">network-only</option>
+          <option value="no-cache">no-cache</option>
+          <option value="standby">standby</option>
         </LabelledSelect>
       </ControlGrid>
       {resultContent}
