@@ -52,6 +52,7 @@ export function BoolLabelledSelect({
     <LabelledSelect
       {...rest}
       value={String(value)}
+      selectClassName="font-mono"
       onOptionChange={(val) => onOptionChange(val === 'true')}
     >
       <option value="true">true</option>

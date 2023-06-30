@@ -2,13 +2,17 @@ import {
   ApolloClient,
   ApolloProvider,
   InMemoryCache,
+  NetworkStatus,
   WatchQueryFetchPolicy,
   gql,
   useQuery,
 } from '@apollo/client'
 import { useState } from 'react'
 import { ControlGrid } from '../components/ControlGrid.tsx'
-import { LabelledSelect } from '../components/LabelledSelect.tsx'
+import {
+  BoolLabelledSelect,
+  LabelledSelect,
+} from '../components/LabelledSelect.tsx'
 import { Page } from '../components/Page.tsx'
 
 const GET_LOCATION = gql`
@@ -49,11 +53,19 @@ function QueriesInner() {
   const [locationId, setLocationId] = useState('loc-1')
   const [fetchPolicy, setFetchPolicy] = useState('cache-first')
   const [nextFetchPolicy, setNextFetchPolicy] = useState('cache-first')
-  const { loading, error, data } = useQuery(GET_LOCATION, {
+  const [notifyOnNetworkStatusChange, setNotifyOnNetworkStatusChange] =
+    useState(true)
+  const { loading, error, data, networkStatus } = useQuery(GET_LOCATION, {
+    notifyOnNetworkStatusChange,
     fetchPolicy: fetchPolicy as WatchQueryFetchPolicy, // Used for first execution
     nextFetchPolicy: nextFetchPolicy as WatchQueryFetchPolicy, // Used for subsequent executions
     variables: { locationId },
   })
+
+  const networkStatusName = NetworkStatus[networkStatus]
+  console.log(
+    `loading: ${loading}, networkStatus: ${networkStatusName} (${networkStatus})`
+  )
 
   let resultContent
   if (loading) resultContent = <p>Loading...</p>
@@ -92,6 +104,11 @@ function QueriesInner() {
           <option value="loc-4">loc-4</option>
           <option value="loc-5">loc-5</option>
         </LabelledSelect>
+        <BoolLabelledSelect
+          label={<code>notifyOnNetworkStatusChange</code>}
+          value={notifyOnNetworkStatusChange}
+          onOptionChange={setNotifyOnNetworkStatusChange}
+        />
         <LabelledSelect
           label={<code>fetchPolicy</code>}
           selectClassName="font-mono"
