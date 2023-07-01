@@ -1,3 +1,5 @@
 Apollo client test project.
 
-Based off of https://www.apollographql.com/docs/react/get-started
+## Development setup:
+1. Boot the server: `cd server; pnpm run start`
+1. Boot the client: `pnpm run dev`
