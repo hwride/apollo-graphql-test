@@ -17,13 +17,11 @@ import {
 import { Page } from '../components/Page.tsx'
 import { PageParagraph } from '../components/PageParagraph.tsx'
 
-const GET_LOCATION = gql`
-  query GetLocation($locationId: ID!) {
-    location(id: $locationId) {
+const GET_BOOK = gql`
+  query GetBook($bookId: ID!) {
+    book(id: $bookId) {
       id
-      name
-      description
-      photo
+      title
     }
   }
 `
@@ -41,7 +39,7 @@ const fetchPolicies = (
 
 export function Queries() {
   const client = new ApolloClient({
-    uri: 'https://flyby-router-demo.herokuapp.com/',
+    uri: 'http://localhost:4000/',
     cache: new InMemoryCache(),
   })
   return (
@@ -52,27 +50,24 @@ export function Queries() {
 }
 
 function QueriesInner() {
-  const [locationId, setLocationId] = useState('loc-1')
+  const [bookId, setbookId] = useState('1')
   const [pollInterval, setPollInterval] = useState(0)
   const [fetchPolicy, setFetchPolicy] = useState('cache-first')
   const [nextFetchPolicy, setNextFetchPolicy] = useState('cache-first')
   const [notifyOnNetworkStatusChange, setNotifyOnNetworkStatusChange] =
     useState(true)
-  const { loading, error, data, networkStatus, refetch } = useQuery(
-    GET_LOCATION,
-    {
-      pollInterval,
-      notifyOnNetworkStatusChange,
-      fetchPolicy: fetchPolicy as WatchQueryFetchPolicy, // Used for first execution
-      nextFetchPolicy: nextFetchPolicy as WatchQueryFetchPolicy, // Used for subsequent executions
-      variables: { locationId },
-    }
-  )
+  const { loading, error, data, networkStatus, refetch } = useQuery(GET_BOOK, {
+    pollInterval,
+    notifyOnNetworkStatusChange,
+    fetchPolicy: fetchPolicy as WatchQueryFetchPolicy, // Used for first execution
+    nextFetchPolicy: nextFetchPolicy as WatchQueryFetchPolicy, // Used for subsequent executions
+    variables: { bookId },
+  })
 
   console.group('Queries render')
   const networkStatusName = NetworkStatus[networkStatus]
   console.log(
-    `locationId: ${locationId}, pollInterval: ${pollInterval}, fetchPolicy: ${fetchPolicy}` +
+    `bookId: ${bookId}, pollInterval: ${pollInterval}, fetchPolicy: ${fetchPolicy}` +
       `, nextFetchPolicy: ${nextFetchPolicy}, notifyOnNetworkStatusChange: ${notifyOnNetworkStatusChange}`
   )
   console.log(
@@ -89,14 +84,14 @@ function QueriesInner() {
         <LabelledSelect
           label="Location ID"
           selectClassName="font-mono"
-          value={locationId}
-          onOptionChange={setLocationId}
+          value={bookId}
+          onOptionChange={setbookId}
         >
-          <option value="loc-1">loc-1</option>
-          <option value="loc-2">loc-2</option>
-          <option value="loc-3">loc-3</option>
-          <option value="loc-4">loc-4</option>
-          <option value="loc-5">loc-5</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5 (does not exist)</option>
         </LabelledSelect>
         <LabelledSelect
           label={
@@ -159,7 +154,7 @@ function QueriesInner() {
           {data === undefined ? (
             'undefined'
           ) : (
-            <code>{`{ location: { id: ${data.location.id} } }`}</code>
+            <code>{`{ title: ${data.book.title} }`}</code>
           )}
         </dd>
       </dl>

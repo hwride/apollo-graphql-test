@@ -34,6 +34,16 @@ const books = [
     title: 'City of Glass',
     author: 'Paul Auster',
   },
+  {
+    id: '3',
+    title: 'The Final Empire',
+    author: 'Brandon Sanderson',
+  },
+  {
+    id: '4',
+    title: 'Lord of the Rings',
+    author: 'J. R. R. Tolkein',
+  },
 ]
 
 // Resolvers define how to fetch the types defined in your schema.
