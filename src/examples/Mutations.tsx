@@ -48,7 +48,7 @@ function getNextBookTitleSuffix() {
 }
 
 export function Mutations() {
-  const { data: booksData } = useQuery(GET_BOOKS)
+  const { data: booksData, loading: getBooksLoading } = useQuery(GET_BOOKS)
   const [refetchGetBooks, setRefetchGetBooks] = useState(true)
   const refetchQueries = refetchGetBooks ? [GET_BOOKS] : undefined
   const [addBook, { data, loading, error, reset }] = useMutation(ADD_BOOK, {
@@ -59,7 +59,11 @@ export function Mutations() {
   })
 
   console.group('Mutations render')
-  console.log(`loading: ${loading}, data: %o, error: %o`, data, error)
+  console.log(
+    `getBooks - loading: ${getBooksLoading}, booksData: %o`,
+    booksData
+  )
+  console.log(`addBook - loading: ${loading}, data: %o, error: %o`, data, error)
   console.groupEnd()
 
   return (
