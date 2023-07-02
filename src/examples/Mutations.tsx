@@ -65,20 +65,6 @@ export function Mutations() {
   return (
     <Page title="Mutations">
       <Docs />
-      <div className="mx-auto mb-2 w-fit">
-        <h2 className="font-bold">Books</h2>
-        {booksData != null && (
-          <ul>
-            {booksData.books.map((book: any) => {
-              return (
-                <li key={book.id}>
-                  {book.title} by {book.author}
-                </li>
-              )
-            })}
-          </ul>
-        )}
-      </div>
 
       <ControlGrid>
         <BoolLabelledSelect
@@ -135,6 +121,8 @@ export function Mutations() {
           </dd>
         </dl>
       </div>
+
+      <Books booksData={booksData} />
     </Page>
   )
 }
@@ -151,5 +139,24 @@ function Docs() {
         added to the query cache.
       </PageParagraph>
     </>
+  )
+}
+
+function Books({ booksData }: { booksData: any }) {
+  return (
+    <div className="mx-auto mb-2 w-fit">
+      <h2 className="font-bold">Books</h2>
+      {booksData != null && (
+        <ul>
+          {booksData.books.map((book: any) => {
+            return (
+              <li key={book.id}>
+                {book.title} by {book.author}
+              </li>
+            )
+          })}
+        </ul>
+      )}
+    </div>
   )
 }
