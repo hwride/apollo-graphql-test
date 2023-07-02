@@ -1,11 +1,4 @@
-import {
-  ApolloClient,
-  ApolloProvider,
-  gql,
-  InMemoryCache,
-  useMutation,
-  useQuery,
-} from '@apollo/client'
+import { gql, useMutation, useQuery } from '@apollo/client'
 import { BorderButton } from '../components/Button.tsx'
 import { Page } from '../components/Page.tsx'
 
@@ -31,24 +24,12 @@ const ADD_BOOK = gql`
   }
 `
 
-export function Mutations() {
-  const client = new ApolloClient({
-    uri: 'http://localhost:4000/',
-    cache: new InMemoryCache(),
-  })
-  return (
-    <ApolloProvider client={client}>
-      <MutationsInner />
-    </ApolloProvider>
-  )
-}
-
 let nextBookTitle = 1
 function getNextBookTitleSuffix() {
   return nextBookTitle++
 }
 
-function MutationsInner() {
+export function Mutations() {
   const { data: booksData, refetch } = useQuery(GET_BOOKS)
   const [addBook, { data, loading, error, reset }] = useMutation(ADD_BOOK)
 

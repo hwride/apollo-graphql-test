@@ -1,7 +1,4 @@
 import {
-  ApolloClient,
-  ApolloProvider,
-  InMemoryCache,
   NetworkStatus,
   WatchQueryFetchPolicy,
   gql,
@@ -38,18 +35,6 @@ const fetchPolicies = (
 )
 
 export function Queries() {
-  const client = new ApolloClient({
-    uri: 'http://localhost:4000/',
-    cache: new InMemoryCache(),
-  })
-  return (
-    <ApolloProvider client={client}>
-      <QueriesInner />
-    </ApolloProvider>
-  )
-}
-
-function QueriesInner() {
   const [bookId, setbookId] = useState('1')
   const [pollInterval, setPollInterval] = useState(0)
   const [fetchPolicy, setFetchPolicy] = useState('cache-first')
