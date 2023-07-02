@@ -46,6 +46,11 @@ export function Mutations() {
 function MutationsInner() {
   const { data: booksData, refetch } = useQuery(GET_BOOKS)
   const [addBook, { data, loading, error }] = useMutation(ADD_BOOK)
+
+  console.group('Mutations render')
+  console.log(`loading: ${loading}, data: %o, error: %o`, data, error)
+  console.groupEnd()
+
   return (
     <Page title="Mutations">
       <div className="mx-auto w-fit">
