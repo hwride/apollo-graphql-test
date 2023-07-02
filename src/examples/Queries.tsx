@@ -67,7 +67,7 @@ export function Queries() {
       <Docs />
       <ControlGrid>
         <LabelledSelect
-          label="Location ID"
+          label="Book ID"
           selectClassName="font-mono"
           value={bookId}
           onOptionChange={setbookId}
