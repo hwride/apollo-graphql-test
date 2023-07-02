@@ -11,6 +11,7 @@ import {
   BoolLabelledSelect,
   LabelledSelect,
 } from '../components/LabelledSelect.tsx'
+import { Link } from '../components/Link.tsx'
 import { Page } from '../components/Page.tsx'
 import { PageParagraph } from '../components/PageParagraph.tsx'
 
@@ -154,9 +155,16 @@ function Docs() {
         This is a test of different Apollo Client query options.
       </PageParagraph>
       <PageParagraph>
-        When <code>notifyOnNetworkStatusChange</code> is false the component
-        will not re-render when fetching with an update <code>loading</code> or{' '}
-        <code>networkStatus</code> attribute for either polling or refetch.
+        When{' '}
+        <Link
+          href="https://www.apollographql.com/docs/react/data/queries#inspecting-loading-states"
+          target="_blank"
+        >
+          <code>notifyOnNetworkStatusChange</code>
+        </Link>{' '}
+        is false the component will not re-render when fetching with an update{' '}
+        <code>loading</code> or <code>networkStatus</code> attribute for either
+        polling or refetch.
       </PageParagraph>
       <PageParagraph>
         Note when <code>notifyOnNetworkStatusChange</code> is true and the
