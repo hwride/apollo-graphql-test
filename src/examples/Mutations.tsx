@@ -1,6 +1,10 @@
 import { gql, useMutation, useQuery } from '@apollo/client'
+import { useState } from 'react'
 import { BorderButton } from '../components/Button.tsx'
+import { ControlGrid } from '../components/ControlGrid.tsx'
+import { BoolLabelledSelect } from '../components/LabelledSelect.tsx'
 import { Page } from '../components/Page.tsx'
+import { PageParagraph } from '../components/PageParagraph.tsx'
 
 const GET_BOOKS = gql`
   query GetBooks {
@@ -17,6 +21,7 @@ const ADD_BOOK = gql`
       success
       code
       book {
+        id
         title
         author
       }
@@ -29,6 +34,7 @@ const RESET_BOOKS = gql`
       success
       code
       books {
+        id
         title
         author
       }
@@ -43,11 +49,13 @@ function getNextBookTitleSuffix() {
 
 export function Mutations() {
   const { data: booksData } = useQuery(GET_BOOKS)
+  const [refetchGetBooks, setRefetchGetBooks] = useState(true)
+  const refetchQueries = refetchGetBooks ? [GET_BOOKS] : undefined
   const [addBook, { data, loading, error, reset }] = useMutation(ADD_BOOK, {
-    refetchQueries: [GET_BOOKS],
+    refetchQueries,
   })
   const [resetBooks] = useMutation(RESET_BOOKS, {
-    refetchQueries: [GET_BOOKS],
+    refetchQueries,
   })
 
   console.group('Mutations render')
@@ -56,7 +64,8 @@ export function Mutations() {
 
   return (
     <Page title="Mutations">
-      <div className="mx-auto w-fit">
+      <Docs />
+      <div className="mx-auto mb-2 w-fit">
         <h2 className="font-bold">Books</h2>
         {booksData != null && (
           <ul>
@@ -70,6 +79,18 @@ export function Mutations() {
           </ul>
         )}
       </div>
+
+      <ControlGrid>
+        <BoolLabelledSelect
+          label={
+            <>
+              Refetch <code>GetBooks</code> after mutations
+            </>
+          }
+          value={refetchGetBooks}
+          onOptionChange={setRefetchGetBooks}
+        />
+      </ControlGrid>
       <div className="mx-auto my-4 flex w-fit flex-col items-center gap-1">
         <BorderButton
           className="block"
@@ -115,5 +136,20 @@ export function Mutations() {
         </dl>
       </div>
     </Page>
+  )
+}
+
+function Docs() {
+  return (
+    <>
+      <PageParagraph>
+        If a mutation result contains an object with <code>__typename</code> and
+        the correct ID attribute (default <code>id</code>), then it will
+        automatically be added to the cache. Try turning off refetch after
+        mutation and adding a book. See how even though the book list doesn't
+        update, the new book returned from the <code>addBook</code> mutation is
+        added to the query cache.
+      </PageParagraph>
+    </>
   )
 }
