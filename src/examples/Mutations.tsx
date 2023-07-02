@@ -42,9 +42,13 @@ function getNextBookTitleSuffix() {
 }
 
 export function Mutations() {
-  const { data: booksData, refetch } = useQuery(GET_BOOKS)
-  const [addBook, { data, loading, error, reset }] = useMutation(ADD_BOOK)
-  const [resetBooks] = useMutation(RESET_BOOKS)
+  const { data: booksData } = useQuery(GET_BOOKS)
+  const [addBook, { data, loading, error, reset }] = useMutation(ADD_BOOK, {
+    refetchQueries: [GET_BOOKS],
+  })
+  const [resetBooks] = useMutation(RESET_BOOKS, {
+    refetchQueries: [GET_BOOKS],
+  })
 
   console.group('Mutations render')
   console.log(`loading: ${loading}, data: %o, error: %o`, data, error)
@@ -69,15 +73,14 @@ export function Mutations() {
       <div className="mx-auto my-4 flex w-fit flex-col items-center gap-1">
         <BorderButton
           className="block"
-          onClick={async () => {
-            await addBook({
+          onClick={async () =>
+            addBook({
               variables: {
                 title: 'New book title ' + getNextBookTitleSuffix(),
                 author: 'New book author',
               },
             })
-            await refetch()
-          }}
+          }
         >
           Add book
         </BorderButton>
