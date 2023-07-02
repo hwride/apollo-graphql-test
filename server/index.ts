@@ -33,13 +33,20 @@ const typeDefs = `#graphql
       message: String!
       book: Book
   }
+  type ResetBooksMutationResponse implements MutationResponse {
+      code: String!
+      success: Boolean!
+      message: String!
+      books: [Book]
+  }
 
   type Mutation {
       addBook(title: String, author: String): AddBookMutationResponse
+      resetBooks: ResetBooksMutationResponse
   }
 `
 
-const books = [
+const originalBooks = Object.freeze([
   {
     id: '1',
     title: 'The Awakening',
@@ -60,7 +67,8 @@ const books = [
     title: 'Lord of the Rings',
     author: 'J. R. R. Tolkein',
   },
-]
+])
+let books = JSON.parse(JSON.stringify(originalBooks))
 
 // Resolvers define how to fetch the types defined in your schema.
 // This resolver retrieves books from the "books" array above.
@@ -80,6 +88,15 @@ const resolvers = {
         success: true,
         message: 'Book successfully added',
         book: newBook,
+      }
+    },
+    resetBooks() {
+      books = JSON.parse(JSON.stringify(originalBooks))
+      return {
+        code: '200',
+        success: true,
+        message: 'Book successfully added',
+        books,
       }
     },
   },

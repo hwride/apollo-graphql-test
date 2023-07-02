@@ -23,6 +23,18 @@ const ADD_BOOK = gql`
     }
   }
 `
+const RESET_BOOKS = gql`
+  mutation ResetBooks {
+    resetBooks {
+      success
+      code
+      books {
+        title
+        author
+      }
+    }
+  }
+`
 
 let nextBookTitle = 1
 function getNextBookTitleSuffix() {
@@ -32,6 +44,7 @@ function getNextBookTitleSuffix() {
 export function Mutations() {
   const { data: booksData, refetch } = useQuery(GET_BOOKS)
   const [addBook, { data, loading, error, reset }] = useMutation(ADD_BOOK)
+  const [resetBooks] = useMutation(RESET_BOOKS)
 
   console.group('Mutations render')
   console.log(`loading: ${loading}, data: %o, error: %o`, data, error)
@@ -70,6 +83,9 @@ export function Mutations() {
         </BorderButton>
         <BorderButton className="block" onClick={reset}>
           <code>useMutation().reset()</code>
+        </BorderButton>
+        <BorderButton className="block" onClick={() => resetBooks()}>
+          Reset books
         </BorderButton>
       </div>
       <div className="mx-auto w-fit">
