@@ -43,6 +43,11 @@ export function Mutations() {
   )
 }
 
+let nextBookTitle = 1
+function getNextBookTitleSuffix() {
+  return nextBookTitle++
+}
+
 function MutationsInner() {
   const { data: booksData, refetch } = useQuery(GET_BOOKS)
   const [addBook, { data, loading, error, reset }] = useMutation(ADD_BOOK)
@@ -73,7 +78,7 @@ function MutationsInner() {
           onClick={async () => {
             await addBook({
               variables: {
-                title: 'New book title',
+                title: 'New book title ' + getNextBookTitleSuffix(),
                 author: 'New book author',
               },
             })
