@@ -21,6 +21,22 @@ const typeDefs = `#graphql
     books: [Book]
     book(id: ID!): Book
   }
+
+  interface MutationResponse {
+      code: String!
+      success: Boolean!
+      message: String!
+  }
+  type AddBookMutationResponse implements MutationResponse {
+      code: String!
+      success: Boolean!
+      message: String!
+      book: Book
+  }
+
+  type Mutation {
+      addBook(title: String, author: String): AddBookMutationResponse
+  }
 `
 
 const books = [
@@ -55,6 +71,18 @@ const resolvers = {
       return books.find((book) => book.id === args.id)
     },
   },
+  Mutation: {
+    addBook(parent, args) {
+      const newBook = { id: `${books.length + 1}`, ...args }
+      books.push(newBook)
+      return {
+        code: '200',
+        success: true,
+        message: 'Book successfully added',
+        book: newBook,
+      }
+    },
+  },
 }
 
 // The ApolloServer constructor requires two parameters: your schema
@@ -68,6 +96,8 @@ const server = new ApolloServer({
 //  1. creates an Express app
 //  2. installs your ApolloServer instance as middleware
 //  3. prepares your app to handle incoming requests
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore it's complaining about top level await, but it works
 const { url } = await startStandaloneServer(server, {
   listen: { port: 4000 },
 })
