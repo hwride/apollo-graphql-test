@@ -45,7 +45,7 @@ export function Mutations() {
 
 function MutationsInner() {
   const { data: booksData, refetch } = useQuery(GET_BOOKS)
-  const [addBook, { data, loading, error }] = useMutation(ADD_BOOK)
+  const [addBook, { data, loading, error, reset }] = useMutation(ADD_BOOK)
 
   console.group('Mutations render')
   console.log(`loading: ${loading}, data: %o, error: %o`, data, error)
@@ -67,20 +67,25 @@ function MutationsInner() {
           </ul>
         )}
       </div>
-      <BorderButton
-        className="mx-auto my-4 block w-fit"
-        onClick={async () => {
-          await addBook({
-            variables: {
-              title: 'New book title',
-              author: 'New book author',
-            },
-          })
-          await refetch()
-        }}
-      >
-        Add book
-      </BorderButton>
+      <div className="mx-auto my-4 flex w-fit flex-col items-center gap-1">
+        <BorderButton
+          className="block"
+          onClick={async () => {
+            await addBook({
+              variables: {
+                title: 'New book title',
+                author: 'New book author',
+              },
+            })
+            await refetch()
+          }}
+        >
+          Add book
+        </BorderButton>
+        <BorderButton className="block" onClick={reset}>
+          <code>useMutation().reset()</code>
+        </BorderButton>
+      </div>
       <div className="mx-auto w-fit">
         <h2 className="font-bold">Mutation results</h2>
         <dl className="my-2 grid w-[500px] grid-cols-2">
