@@ -2,6 +2,7 @@ import { gql, useMutation, useQuery } from '@apollo/client'
 import { useState } from 'react'
 import { BorderButton } from '../components/Button.tsx'
 import { ControlGrid } from '../components/ControlGrid.tsx'
+import { H2Inline } from '../components/Headings.tsx'
 import { BoolLabelledSelect } from '../components/LabelledSelect.tsx'
 import { Link } from '../components/Link.tsx'
 import { Page } from '../components/Page.tsx'
@@ -137,40 +138,55 @@ function Docs() {
     <>
       <PageParagraph>
         This contains an example of a GraphQL mutation to add a book to our
-        books list. At the bottom is a display of the current list of books. The
-        default behaviour is to automatically refetch the list of books after
-        the add book mutation completes, via{' '}
-        <Link
-          href="https://www.apollographql.com/docs/react/data/mutations/#refetching-queries"
-          target="_blank"
-        >
-          <code>refetchQueries</code>
-        </Link>
-        .
+        books list. At the bottom is a display of the current list of books.
       </PageParagraph>
       <PageParagraph>
-        If a mutation result contains an object with <code>__typename</code> and
-        the correct ID attribute (
+        <H2Inline>
+          <Link
+            href="https://www.apollographql.com/docs/react/data/mutations/#include-modified-objects-in-mutation-responses"
+            target="_blank"
+          >
+            Automatically adding objects to the cache
+          </Link>
+        </H2Inline>
+        : Notice that if a mutation result contains an object with{' '}
+        <code>__typename</code> and the correct ID attribute (
         <Link
           href="https://www.apollographql.com/docs/react/caching/cache-configuration/#customizing-cache-ids"
           target="_blank"
         >
           by default <code>id</code>
         </Link>
-        ), then it will automatically be added to the cache. Try turning off
-        refetch after mutation and adding a book. See how even though the book
-        list doesn't update, the new book returned from the <code>addBook</code>{' '}
+        ), then it it automatically added to the cache. Try turning off refetch
+        after mutation and adding a book. See how even though the book list
+        doesn't update, the new book returned from the <code>addBook</code>{' '}
         mutation is added to the query cache.
       </PageParagraph>
       <PageParagraph>
-        You can avoid an extra fetch as in this example by{' '}
+        <H2Inline>Refetching data after a mutation</H2Inline>: In this example
+        we enable refetching of the book list query after the mutation
+        completes, via{' '}
+        <Link
+          href="https://www.apollographql.com/docs/react/data/mutations/#refetching-queries"
+          target="_blank"
+        >
+          <code>refetchQueries</code>
+        </Link>
+        . You can turn this off in the controls. You can avoid this extra fetch
+        altogether by{' '}
         <Link
           href="https://www.apollographql.com/docs/react/data/mutations/#updating-the-cache-directly"
           target="_blank"
         >
           updating the cache directly
         </Link>
-        , see other examples.
+        , this is covered in other examples.
+      </PageParagraph>
+      <PageParagraph>
+        <H2Inline>Storage of list objects</H2Inline>: Notice in the cache how
+        the list of books returned by the <code>GetBooks</code> query does not
+        have a top-level cache entry like our individual books object, but only
+        exists under <code>ROOT_QUERY/books</code>.
       </PageParagraph>
     </>
   )

@@ -7,6 +7,7 @@ import {
 import { useState } from 'react'
 import { BorderButton } from '../components/Button.tsx'
 import { ControlGrid } from '../components/ControlGrid.tsx'
+import { H2Inline } from '../components/Headings.tsx'
 import {
   BoolLabelledSelect,
   LabelledSelect,
@@ -155,28 +156,48 @@ function Docs() {
         This is a test of different Apollo Client query options.
       </PageParagraph>
       <PageParagraph>
-        When{' '}
+        <H2Inline>What's stored in the cache</H2Inline>: Look under the{' '}
+        <Link
+          href="https://www.apollographql.com/docs/react/development-testing/developer-tooling/"
+          target="_blank"
+        >
+          Apollo Client DevTools
+        </Link>{' '}
+        cache. Note how our individual book objects are stored under their own
+        cache entries, such as <code>Book:1</code> and <code>Book:2</code>. Also
+        note how there is an extra for entry for the actual query we made to get
+        each individual book under{' '}
+        <code>
+          ROOT_QUERY/book({'{'}"id":"1"{'}'})
+        </code>{' '}
+        etc.
+      </PageParagraph>
+      <PageParagraph>
+        <H2Inline>Loading states</H2Inline>: By default when you refetch or a
+        poll is triggered, our <code>loading</code> and{' '}
+        <code>networkStatus</code>
+        don't change, meaning we can't display any kind of loading indicators in
+        these scenarios. If you set{' '}
         <Link
           href="https://www.apollographql.com/docs/react/data/queries#inspecting-loading-states"
           target="_blank"
         >
           <code>notifyOnNetworkStatusChange</code>
         </Link>{' '}
-        is false the component will not re-render when fetching with an update{' '}
-        <code>loading</code> or <code>networkStatus</code> attribute for either
-        polling or refetch.
+        to true then these attributes will be updated when a fetch is in
+        progress.
       </PageParagraph>
       <PageParagraph>
-        Note when <code>notifyOnNetworkStatusChange</code> is true and the
-        component re-renders while data is being fetched, the old data remains
-        available in <code>data</code>.
+        Also note that <code>notifyOnNetworkStatusChange</code> is true and the
+        component re-renders while new data is being fetched, the old data
+        remains available in <code>data</code>.
       </PageParagraph>
       <PageParagraph>
-        But also notice that regardless of the value of{' '}
-        <code>notifyOnNetworkStatusChange</code> the component will re-render
+        And also notice that regardless of the value of{' '}
+        <code>notifyOnNetworkStatusChange</code>, the component will re-render
         and <code>loading</code> will change when you submit a new ID. This
         seems to suggest the disabling of re-renders by default for subsequent
-        fetches only applies to objects already requested.
+        fetches only applies to objects that have already requested.
       </PageParagraph>
     </>
   )

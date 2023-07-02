@@ -1,3 +1,4 @@
+import { clsx } from 'clsx'
 import { HTMLAttributes } from 'react'
 
 export function H2({
@@ -10,6 +11,14 @@ export function H2({
     </h2>
   )
 }
+
+export function H2Inline({
+  children,
+  className,
+}: HTMLAttributes<HTMLHeadingElement>) {
+  return <h2 className={clsx('inline font-bold', className)}>{children}</h2>
+}
+
 export function H3({
   className,
   children,
