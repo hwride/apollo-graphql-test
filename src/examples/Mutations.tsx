@@ -157,7 +157,7 @@ function Docs() {
         >
           by default <code>id</code>
         </Link>
-        ), then it it automatically added to the cache. Try turning off refetch
+        ), then it is automatically added to the cache. Try turning off refetch
         after mutation and adding a book. See how even though the book list
         doesn't update, the new book returned from the <code>addBook</code>{' '}
         mutation is added to the query cache.

@@ -175,9 +175,8 @@ function Docs() {
       <PageParagraph>
         <H2Inline>Loading states</H2Inline>: By default when you refetch or a
         poll is triggered, our <code>loading</code> and{' '}
-        <code>networkStatus</code>
-        don't change, meaning we can't display any kind of loading indicators in
-        these scenarios. If you set{' '}
+        <code>networkStatus</code> don't change, meaning we can't display any
+        kind of loading indicators in these scenarios. If you set{' '}
         <Link
           href="https://www.apollographql.com/docs/react/data/queries#inspecting-loading-states"
           target="_blank"
@@ -188,8 +187,8 @@ function Docs() {
         progress.
       </PageParagraph>
       <PageParagraph>
-        Also note that <code>notifyOnNetworkStatusChange</code> is true and the
-        component re-renders while new data is being fetched, the old data
+        Also note that when <code>notifyOnNetworkStatusChange</code> is true and
+        the component re-renders while new data is being fetched, the old data
         remains available in <code>data</code>.
       </PageParagraph>
       <PageParagraph>
@@ -197,7 +196,7 @@ function Docs() {
         <code>notifyOnNetworkStatusChange</code>, the component will re-render
         and <code>loading</code> will change when you submit a new ID. This
         seems to suggest the disabling of re-renders by default for subsequent
-        fetches only applies to objects that have already requested.
+        fetches only applies to objects that have already been requested.
       </PageParagraph>
     </>
   )
