@@ -1,5 +1,5 @@
 import { clsx } from 'clsx'
-import { ConfigEntry } from '../exampleConfig.ts'
+import { ConfigEntry } from '../../exampleConfig.ts'
 import { MobileMenuButton } from './menu/MobileMenuButton.tsx'
 
 export function MobileHeader({

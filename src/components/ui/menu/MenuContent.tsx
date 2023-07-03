@@ -2,7 +2,7 @@ import { clsx } from 'clsx'
 import { HTMLMotionProps, motion } from 'framer-motion'
 import { ReactNode } from 'react'
 import { Menu as MenuIcon } from 'react-feather'
-import { ConfigEntry, componentConfig } from '../../exampleConfig.ts'
+import { ConfigEntry, componentConfig } from '../../../exampleConfig.ts'
 import { Button } from '../Button.tsx'
 
 export { MenuIcon }
@@ -18,9 +18,7 @@ export function MenuContent({
 }) {
   return (
     <nav>
-      <div className="flex items-start justify-between">
-        {closeIconSlot}
-      </div>
+      <div className="flex items-start justify-between">{closeIconSlot}</div>
       <ol className="m-0 flex-1 list-none">
         {componentConfig.map((entry) => {
           const isCurrentEg = selectedExampleId === entry.id

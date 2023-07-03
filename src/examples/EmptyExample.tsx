@@ -1,4 +1,4 @@
-import { Page } from '../components/Page.tsx'
+import { Page } from '../components/ui/Page.tsx'
 
 /**
  * Example that is shown when nothing is selected.

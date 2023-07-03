@@ -1,4 +1,4 @@
-import { ConfigEntry } from '../../exampleConfig.ts'
+import { ConfigEntry } from '../../../exampleConfig.ts'
 import { MenuContent } from './MenuContent.tsx'
 
 export function DesktopMenu({

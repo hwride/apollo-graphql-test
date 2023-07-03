@@ -5,9 +5,9 @@ import {
   gql,
   useQuery,
 } from '@apollo/client'
-import { Link } from '../components/Link.tsx'
-import { Page } from '../components/Page.tsx'
-import { PageParagraph } from '../components/PageParagraph.tsx'
+import { Link } from '../components/ui/Link.tsx'
+import { Page } from '../components/ui/Page.tsx'
+import { PageParagraph } from '../components/ui/PageParagraph.tsx'
 
 const GET_LOCATIONS = gql`
   query GetLocations {

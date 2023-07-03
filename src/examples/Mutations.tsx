@@ -1,12 +1,12 @@
 import { gql, useMutation, useQuery } from '@apollo/client'
 import { useState } from 'react'
-import { BorderButton } from '../components/Button.tsx'
-import { ControlGrid } from '../components/ControlGrid.tsx'
-import { H2Inline } from '../components/Headings.tsx'
-import { BoolLabelledSelect } from '../components/LabelledSelect.tsx'
-import { Link } from '../components/Link.tsx'
-import { Page } from '../components/Page.tsx'
-import { PageParagraph } from '../components/PageParagraph.tsx'
+import { BorderButton } from '../components/ui/Button.tsx'
+import { ControlGrid } from '../components/ui/ControlGrid.tsx'
+import { H2Inline } from '../components/ui/Headings.tsx'
+import { BoolLabelledSelect } from '../components/ui/LabelledSelect.tsx'
+import { Link } from '../components/ui/Link.tsx'
+import { Page } from '../components/ui/Page.tsx'
+import { PageParagraph } from '../components/ui/PageParagraph.tsx'
 
 const GET_BOOKS = gql`
   query GetBooks {

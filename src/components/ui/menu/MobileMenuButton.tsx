@@ -1,6 +1,6 @@
 import { clsx } from 'clsx'
-import { ConfigEntry } from '../../exampleConfig.ts'
-import { colours } from '../../utils/tailwind.ts'
+import { ConfigEntry } from '../../../exampleConfig.ts'
+import { colours } from '../../../utils/tailwind.ts'
 import { MotionIconButton } from '../IconButton.tsx'
 import { MenuIcon } from './MenuContent.tsx'
 import { MobileMenu } from './MobileMenu.tsx'

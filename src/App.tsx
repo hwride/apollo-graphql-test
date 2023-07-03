@@ -1,11 +1,11 @@
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
 import './App.css'
-import { MobileHeader } from './components/MobileHeader.tsx'
-import { DesktopMenu } from './components/menu/DesktopMenu.tsx'
+import { MobileHeader } from './components/ui/MobileHeader.tsx'
+import { DesktopMenu } from './components/ui/menu/DesktopMenu.tsx'
 import {
   MobileMenuProvider,
   useMobileMenu,
-} from './components/menu/MobileMenuContext.tsx'
+} from './components/ui/menu/MobileMenuContext.tsx'
 import { useSelectedExample } from './useSelectedExample.ts'
 
 // Share our Apollo Client between examples. Previously created a different
