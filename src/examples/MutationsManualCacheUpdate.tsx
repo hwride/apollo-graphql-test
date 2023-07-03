@@ -1,11 +1,6 @@
 import { gql, useMutation, useQuery } from '@apollo/client'
 import { useState } from 'react'
-import {
-  ADD_BOOK,
-  GET_BOOKS,
-  MutationsAddBookSkeleton,
-  RESET_BOOKS,
-} from '../components/MutationsAddBookSkeleton.tsx'
+import { MutationsAddBookSkeleton } from '../components/MutationsAddBookSkeleton.tsx'
 import { BoolLabelledSelect } from '../components/ui/LabelledSelect.tsx'
 import { Link } from '../components/ui/Link.tsx'
 import { Page } from '../components/ui/Page.tsx'
@@ -13,6 +8,7 @@ import {
   H3PageParagraph,
   PageParagraph,
 } from '../components/ui/PageParagraph.tsx'
+import { ADD_BOOK, GET_BOOKS, RESET_BOOKS } from './queries.ts'
 
 export function MutationsManualCacheUpdate() {
   console.group('Mutations render')

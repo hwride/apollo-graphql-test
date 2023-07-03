@@ -1,9 +1,4 @@
-import {
-  NetworkStatus,
-  WatchQueryFetchPolicy,
-  gql,
-  useQuery,
-} from '@apollo/client'
+import { NetworkStatus, WatchQueryFetchPolicy, useQuery } from '@apollo/client'
 import { useState } from 'react'
 import { BorderButton } from '../components/ui/Button.tsx'
 import { ControlGrid } from '../components/ui/ControlGrid.tsx'
@@ -17,15 +12,7 @@ import {
   H3PageParagraph,
   PageParagraph,
 } from '../components/ui/PageParagraph.tsx'
-
-const GET_BOOK = gql`
-  query GetBook($bookId: ID!) {
-    book(id: $bookId) {
-      id
-      title
-    }
-  }
-`
+import { GET_BOOK } from './queries.ts'
 
 const fetchPolicies = (
   <>

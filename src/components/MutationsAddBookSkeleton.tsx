@@ -1,45 +1,8 @@
-import { gql } from '@apollo/client'
 import { ReactNode } from 'react'
 import { Books } from '../components/Books.tsx'
 import { BorderButton } from '../components/ui/Button.tsx'
 import { ControlGrid } from '../components/ui/ControlGrid.tsx'
 import { BoolLabelledSelect } from '../components/ui/LabelledSelect.tsx'
-
-export const GET_BOOKS = gql`
-  query GetBooks {
-    books {
-      id
-      title
-      author
-    }
-  }
-`
-export const ADD_BOOK = gql`
-  mutation AddBook($title: String!, $author: String!, $delayMs: Int) {
-    addBook(title: $title, author: $author, delayMs: $delayMs) {
-      success
-      code
-      book {
-        id
-        title
-        author
-      }
-    }
-  }
-`
-export const RESET_BOOKS = gql`
-  mutation ResetBooks($delayMs: Int) {
-    resetBooks(delayMs: $delayMs) {
-      success
-      code
-      books {
-        id
-        title
-        author
-      }
-    }
-  }
-`
 
 let nextBookTitle = 1
 export function getNextBookTitleSuffix() {

@@ -2,10 +2,6 @@ import { gql, useMutation, useQuery } from '@apollo/client'
 import { useState } from 'react'
 import { Books } from '../components/Books.tsx'
 import { DelayServerSelect } from '../components/DelayServerSelect.tsx'
-import {
-  GET_BOOKS,
-  RESET_BOOKS,
-} from '../components/MutationsAddBookSkeleton.tsx'
 import { BorderButton } from '../components/ui/Button.tsx'
 import { ControlGrid } from '../components/ui/ControlGrid.tsx'
 import { Link } from '../components/ui/Link.tsx'
@@ -15,16 +11,7 @@ import {
   PageParagraph,
 } from '../components/ui/PageParagraph.tsx'
 import { TextInput } from '../components/ui/TextInput.tsx'
-
-const GET_BOOK = gql`
-  query GetBook($bookId: ID!) {
-    book(id: $bookId) {
-      id
-      title
-      author
-    }
-  }
-`
+import { GET_BOOK, GET_BOOKS, RESET_BOOKS } from './queries.ts'
 
 const UPDATE_BOOK = gql`
   mutation UpdateBook(

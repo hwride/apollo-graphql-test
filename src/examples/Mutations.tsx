@@ -1,14 +1,10 @@
 import { useMutation, useQuery } from '@apollo/client'
 import { useState } from 'react'
-import {
-  ADD_BOOK,
-  GET_BOOKS,
-  MutationsAddBookSkeleton,
-  RESET_BOOKS,
-} from '../components/MutationsAddBookSkeleton.tsx'
+import { MutationsAddBookSkeleton } from '../components/MutationsAddBookSkeleton.tsx'
 import { Link } from '../components/ui/Link.tsx'
 import { Page } from '../components/ui/Page.tsx'
 import { H3PageParagraph, PageParagraph } from '../components/ui/PageParagraph'
+import { ADD_BOOK, GET_BOOKS, RESET_BOOKS } from './queries.ts'
 
 export function Mutations() {
   console.group('Mutations render')

@@ -2,17 +2,13 @@ import { gql, useMutation, useQuery } from '@apollo/client'
 import { useState } from 'react'
 import { Books } from '../components/Books.tsx'
 import { DelayServerSelect } from '../components/DelayServerSelect.tsx'
-import {
-  ADD_BOOK,
-  GET_BOOKS,
-  RESET_BOOKS,
-  getNextBookTitleSuffix,
-} from '../components/MutationsAddBookSkeleton.tsx'
+import { getNextBookTitleSuffix } from '../components/MutationsAddBookSkeleton.tsx'
 import { BorderButton } from '../components/ui/Button.tsx'
 import { ControlGrid } from '../components/ui/ControlGrid.tsx'
 import { Link } from '../components/ui/Link.tsx'
 import { Page } from '../components/ui/Page.tsx'
 import { PageParagraph } from '../components/ui/PageParagraph.tsx'
+import { ADD_BOOK, GET_BOOKS, RESET_BOOKS } from './queries.ts'
 
 export function MutationsOptimisticUpdateNoID() {
   console.group('Mutations render')
