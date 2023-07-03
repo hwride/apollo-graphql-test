@@ -62,7 +62,6 @@ export function MutationsAddBookSkeleton({
   const [addBook, { data, loading, error, reset }] = addBookMutation
   const [resetBooks] = resetBooksMutation
 
-  console.group('Mutations render')
   console.log(
     `getBooks - loading: ${getBooksLoading}, booksData: %o`,
     booksData

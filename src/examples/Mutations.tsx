@@ -11,6 +11,7 @@ import { Page } from '../components/ui/Page.tsx'
 import { H3PageParagraph, PageParagraph } from '../components/ui/PageParagraph'
 
 export function Mutations() {
+  console.group('Mutations render')
   const getBooksQuery = useQuery(GET_BOOKS)
   const [refetchGetBooks, setRefetchGetBooks] = useState(true)
   const refetchQueries = refetchGetBooks ? [GET_BOOKS] : undefined

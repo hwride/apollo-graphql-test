@@ -14,7 +14,10 @@ import {
 } from '../components/ui/PageParagraph.tsx'
 
 export function MutationsManualCacheUpdate() {
-  const getBooksQuery = useQuery(GET_BOOKS)
+  console.group('Mutations render')
+  const getBooksQuery = useQuery(GET_BOOKS, {
+    notifyOnNetworkStatusChange: true,
+  })
   const [refetchGetBooks, setRefetchGetBooks] = useState(false)
   const refetchQueries = refetchGetBooks ? [GET_BOOKS] : undefined
   const addBookMutation = useMutation(ADD_BOOK, {
@@ -38,11 +41,20 @@ export function MutationsManualCacheUpdate() {
                 }
               `,
             })
-            console.log(`newBookRef: %o`, newBookRef)
+            console.log(
+              `useMutation(ADD_BOOK) update - newBookRef: %o`,
+              newBookRef
+            )
             return [...existingBooks, newBookRef]
           },
         },
       })
+    },
+    onQueryUpdated: (observableQuery) => {
+      console.log(
+        `useMutation(ADD_BOOK) onQueryUpdated - observableQuery: %o`,
+        observableQuery
+      )
     },
   })
   const resetBooksMutation = useMutation(RESET_BOOKS, {
@@ -63,11 +75,20 @@ export function MutationsManualCacheUpdate() {
                 `,
               })
             )
-            console.log(`newBookRefs: %o`, newBookRefs)
+            console.log(
+              `useMutation(RESET_BOOKS) update - newBookRefs: %o`,
+              newBookRefs
+            )
             return newBookRefs
           },
         },
       })
+    },
+    onQueryUpdated: (observableQuery) => {
+      console.log(
+        `useMutation(RESET_BOOKS) onQueryUpdated - observableQuery: %o`,
+        observableQuery
+      )
     },
   })
 
