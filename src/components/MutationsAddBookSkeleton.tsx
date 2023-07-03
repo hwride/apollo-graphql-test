@@ -42,7 +42,7 @@ export const RESET_BOOKS = gql`
 `
 
 let nextBookTitle = 1
-function getNextBookTitleSuffix() {
+export function getNextBookTitleSuffix() {
   return nextBookTitle++
 }
 
@@ -89,7 +89,7 @@ export function MutationsAddBookSkeleton({
       <div className="mx-auto my-4 flex w-fit flex-col items-center gap-1">
         <BorderButton
           className="block"
-          onClick={async () =>
+          onClick={() =>
             addBook({
               variables: {
                 title: 'New book title ' + getNextBookTitleSuffix(),
