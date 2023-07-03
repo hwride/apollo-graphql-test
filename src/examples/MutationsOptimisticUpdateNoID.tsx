@@ -1,5 +1,7 @@
 import { gql, useMutation, useQuery } from '@apollo/client'
+import { useState } from 'react'
 import { Books } from '../components/Books.tsx'
+import { DelayServerSelect } from '../components/DelayServerSelect.tsx'
 import {
   ADD_BOOK,
   GET_BOOKS,
@@ -7,12 +9,14 @@ import {
   getNextBookTitleSuffix,
 } from '../components/MutationsAddBookSkeleton.tsx'
 import { BorderButton } from '../components/ui/Button.tsx'
+import { ControlGrid } from '../components/ui/ControlGrid.tsx'
 import { Link } from '../components/ui/Link.tsx'
 import { Page } from '../components/ui/Page.tsx'
 import { PageParagraph } from '../components/ui/PageParagraph.tsx'
 
 export function MutationsOptimisticUpdateNoID() {
   console.group('Mutations render')
+  const [delayMs, setDelayMs] = useState(2000)
   const { data: booksData, loading: getBooksLoading } = useQuery(GET_BOOKS, {
     notifyOnNetworkStatusChange: true,
   })
@@ -61,6 +65,9 @@ export function MutationsOptimisticUpdateNoID() {
     <Page title="Mutations - optimistic update no ID">
       <Docs />
 
+      <ControlGrid>
+        <DelayServerSelect delayMs={delayMs} setDelayMs={setDelayMs} />
+      </ControlGrid>
       <div className="mx-auto my-4 flex w-fit flex-col items-center gap-1">
         <BorderButton
           className="block"
@@ -70,7 +77,10 @@ export function MutationsOptimisticUpdateNoID() {
               author: 'New book author',
             }
             addBook({
-              variables: newBook,
+              variables: {
+                ...newBook,
+                delayMs,
+              },
               optimisticResponse: {
                 addBook: {
                   success: true,
@@ -87,7 +97,14 @@ export function MutationsOptimisticUpdateNoID() {
         >
           Add book
         </BorderButton>
-        <BorderButton className="block" onClick={() => resetBooks()}>
+        <BorderButton
+          className="block"
+          onClick={() =>
+            resetBooks({
+              variables: { delayMs },
+            })
+          }
+        >
           Reset books
         </BorderButton>
       </div>
@@ -111,17 +128,16 @@ function Docs() {
         .
       </PageParagraph>
       <PageParagraph>
-        Set your network connection to Slow 3G in DevTools, then switch to the
-        Apollo DevTools cache tab. Now click "Add book". You should briefly see{' '}
-        <code>Book:optimistic-id</code> added to the cache and displayed on the
-        screen before the mutation request returns. Once the mutation request
-        returns it overwrites the temporary optimistic cache entry.
+        Click "Add book". You should see the book updated on the page before any
+        network request is made. You can also see this in the cache in Apollo
+        DevTools, <code>Book:optimistic-id</code> will appear for the duration
+        of the optimistic update. Once the mutation request returns it
+        overwrites the temporary optimistic cache entry, in case of any changes.
       </PageParagraph>
       <PageParagraph>
-        Note you need to have defined a <code>update</code> function as part of
-        your <code>useMutation</code> call for optimistic updates to work with
-        for things like adding or removing items from a list, as in this
-        example.
+        Note you need to define an <code>update</code> function as part of your{' '}
+        <code>useMutation</code> call for optimistic updates to work with for
+        things like adding or removing items from a list, as in this example.
       </PageParagraph>
     </>
   )

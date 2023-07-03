@@ -48,9 +48,9 @@ const typeDefs = `#graphql
   }
 
   type Mutation {
-      addBook(title: String, author: String): AddBookMutationResponse
+      addBook(title: String, author: String, delayMs: Int): AddBookMutationResponse
       updateBook(id: ID!, title: String, author: String, delayMs: Int): AddBookMutationResponse
-      resetBooks: ResetBooksMutationResponse
+      resetBooks(delayMs: Int): ResetBooksMutationResponse
   }
 `
 

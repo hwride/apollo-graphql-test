@@ -15,8 +15,8 @@ export const GET_BOOKS = gql`
   }
 `
 export const ADD_BOOK = gql`
-  mutation AddBook($title: String!, $author: String!) {
-    addBook(title: $title, author: $author) {
+  mutation AddBook($title: String!, $author: String!, $delayMs: Int) {
+    addBook(title: $title, author: $author, delayMs: $delayMs) {
       success
       code
       book {
@@ -28,8 +28,8 @@ export const ADD_BOOK = gql`
   }
 `
 export const RESET_BOOKS = gql`
-  mutation ResetBooks {
-    resetBooks {
+  mutation ResetBooks($delayMs: Int) {
+    resetBooks(delayMs: $delayMs) {
       success
       code
       books {

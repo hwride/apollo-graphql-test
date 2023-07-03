@@ -119,7 +119,14 @@ export function MutationsOptimisticUpdate() {
         >
           Update book
         </BorderButton>
-        <BorderButton className="block" onClick={() => resetBooks()}>
+        <BorderButton
+          className="block"
+          onClick={() =>
+            resetBooks({
+              variables: { delayMs },
+            })
+          }
+        >
           Reset books
         </BorderButton>
       </div>
@@ -150,11 +157,10 @@ function Docs() {
         for an object we already know about.
       </PageParagraph>
       <PageParagraph>
-        Set your network connection to Slow 3G in DevTools, then click "Update
-        book". You should see the book updated on the page before any network
-        request is made, and also in the cache if you check Apollo DevTools.
-        Once the mutation request returns it overwrites the temporary optimistic
-        cache entry, in case of any changes.
+        Click "Update book". You should see the book updated on the page before
+        any network request is made. You can also see this in the cache in
+        Apollo DevTools. Once the mutation request returns it overwrites the
+        temporary optimistic cache entry, in case of any changes.
       </PageParagraph>
       <H3PageParagraph heading="Lists">
         Notice that both our individual book and our list of books update when
