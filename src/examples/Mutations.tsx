@@ -1,5 +1,6 @@
 import { gql, useMutation, useQuery } from '@apollo/client'
 import { useState } from 'react'
+import { Books } from '../components/Books.tsx'
 import { BorderButton } from '../components/ui/Button.tsx'
 import { ControlGrid } from '../components/ui/ControlGrid.tsx'
 import { H2Inline } from '../components/ui/Headings.tsx'
@@ -189,24 +190,5 @@ function Docs() {
         exists under <code>ROOT_QUERY/books</code>.
       </PageParagraph>
     </>
-  )
-}
-
-function Books({ booksData }: { booksData: any }) {
-  return (
-    <div className="mx-auto mb-2 w-fit">
-      <h2 className="font-bold">Books</h2>
-      {booksData != null && (
-        <ul>
-          {booksData.books.map((book: any) => {
-            return (
-              <li key={book.id}>
-                {book.title} by {book.author}
-              </li>
-            )
-          })}
-        </ul>
-      )}
-    </div>
   )
 }
