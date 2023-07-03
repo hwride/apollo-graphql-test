@@ -3,11 +3,13 @@ import { useState } from 'react'
 import { Books } from '../components/Books.tsx'
 import { BorderButton } from '../components/ui/Button.tsx'
 import { ControlGrid } from '../components/ui/ControlGrid.tsx'
-import { H2Inline } from '../components/ui/Headings.tsx'
 import { BoolLabelledSelect } from '../components/ui/LabelledSelect.tsx'
 import { Link } from '../components/ui/Link.tsx'
 import { Page } from '../components/ui/Page.tsx'
-import { PageParagraph } from '../components/ui/PageParagraph.tsx'
+import {
+  H3PageParagraph,
+  PageParagraph,
+} from '../components/ui/PageParagraph.tsx'
 
 const GET_BOOKS = gql`
   query GetBooks {
@@ -141,16 +143,17 @@ function Docs() {
         This contains an example of a GraphQL mutation to add a book to our
         books list. At the bottom is a display of the current list of books.
       </PageParagraph>
-      <PageParagraph>
-        <H2Inline>
+      <H3PageParagraph
+        heading={
           <Link
             href="https://www.apollographql.com/docs/react/data/mutations/#include-modified-objects-in-mutation-responses"
             target="_blank"
           >
             Automatically adding objects to the cache
           </Link>
-        </H2Inline>
-        : Notice that if a mutation result contains an object with{' '}
+        }
+      >
+        Notice that if a mutation result contains an object with{' '}
         <code>__typename</code> and the correct ID attribute (
         <Link
           href="https://www.apollographql.com/docs/react/caching/cache-configuration/#customizing-cache-ids"
@@ -162,11 +165,10 @@ function Docs() {
         after mutation and adding a book. See how even though the book list
         doesn't update, the new book returned from the <code>addBook</code>{' '}
         mutation is added to the query cache.
-      </PageParagraph>
-      <PageParagraph>
-        <H2Inline>Refetching data after a mutation</H2Inline>: In this example
-        we enable refetching of the book list query after the mutation
-        completes, via{' '}
+      </H3PageParagraph>
+      <H3PageParagraph heading="Refetching data after a mutation">
+        In this example we enable refetching of the book list query after the
+        mutation completes, via{' '}
         <Link
           href="https://www.apollographql.com/docs/react/data/mutations/#refetching-queries"
           target="_blank"
@@ -182,13 +184,13 @@ function Docs() {
           updating the cache directly
         </Link>
         , this is covered in other examples.
-      </PageParagraph>
-      <PageParagraph>
-        <H2Inline>Storage of list objects</H2Inline>: Notice in the cache how
-        the list of books returned by the <code>GetBooks</code> query does not
-        have a top-level cache entry like our individual books object, but only
-        exists under <code>ROOT_QUERY/books</code>.
-      </PageParagraph>
+      </H3PageParagraph>
+      <H3PageParagraph heading="Storage of list objects">
+        Notice in the cache how the list of books returned by the{' '}
+        <code>GetBooks</code> query does not have a top-level cache entry like
+        our individual books object, but only exists under{' '}
+        <code>ROOT_QUERY/books</code>.
+      </H3PageParagraph>
     </>
   )
 }

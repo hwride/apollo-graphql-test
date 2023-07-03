@@ -12,11 +12,11 @@ export function H2({
   )
 }
 
-export function H2Inline({
+export function H3Inline({
   children,
   className,
 }: HTMLAttributes<HTMLHeadingElement>) {
-  return <h2 className={clsx('inline font-bold', className)}>{children}</h2>
+  return <h3 className={clsx('inline font-bold', className)}>{children}</h3>
 }
 
 export function H3({

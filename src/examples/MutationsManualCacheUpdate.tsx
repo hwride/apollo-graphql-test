@@ -3,11 +3,13 @@ import { useState } from 'react'
 import { Books } from '../components/Books.tsx'
 import { BorderButton } from '../components/ui/Button.tsx'
 import { ControlGrid } from '../components/ui/ControlGrid.tsx'
-import { H2Inline } from '../components/ui/Headings.tsx'
 import { BoolLabelledSelect } from '../components/ui/LabelledSelect.tsx'
 import { Link } from '../components/ui/Link.tsx'
 import { Page } from '../components/ui/Page.tsx'
-import { PageParagraph } from '../components/ui/PageParagraph.tsx'
+import {
+  H3PageParagraph,
+  PageParagraph,
+} from '../components/ui/PageParagraph.tsx'
 
 const GET_BOOKS = gql`
   query GetBooks {
@@ -175,14 +177,12 @@ function Docs() {
         happens after a mutation response isn't sufficient to update all
         appropriate fields, this can happen for example in list fields.
       </PageParagraph>
-      <PageParagraph>
-        <H2Inline>Updating of related queries:</H2Inline> Note how the books
-        query automatically updates in response to the cache data we set inside{' '}
-        <code>update</code> after the mutation.
-      </PageParagraph>
-      <PageParagraph>
-        <H2Inline>Refetch after update:</H2Inline> You do still have the option
-        to{' '}
+      <H3PageParagraph heading="Updating of related queries">
+        Note how the books query automatically updates in response to the cache
+        data we set inside <code>update</code> after the mutation.
+      </H3PageParagraph>
+      <H3PageParagraph heading="Refetch after update">
+        You do still have the option to{' '}
         <Link
           href="https://www.apollographql.com/docs/react/data/mutations/#refetching-after-update"
           target="_blank"
@@ -192,7 +192,7 @@ function Docs() {
         if you'd like to make doubly sure everything is in sync. In this case
         the refetch would overwrite local changes made if the data was
         different.
-      </PageParagraph>
+      </H3PageParagraph>
     </>
   )
 }

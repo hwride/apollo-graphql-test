@@ -7,14 +7,16 @@ import {
 import { useState } from 'react'
 import { BorderButton } from '../components/ui/Button.tsx'
 import { ControlGrid } from '../components/ui/ControlGrid.tsx'
-import { H2Inline } from '../components/ui/Headings.tsx'
 import {
   BoolLabelledSelect,
   LabelledSelect,
 } from '../components/ui/LabelledSelect.tsx'
 import { Link } from '../components/ui/Link.tsx'
 import { Page } from '../components/ui/Page.tsx'
-import { PageParagraph } from '../components/ui/PageParagraph.tsx'
+import {
+  H3PageParagraph,
+  PageParagraph,
+} from '../components/ui/PageParagraph.tsx'
 
 const GET_BOOK = gql`
   query GetBook($bookId: ID!) {
@@ -155,8 +157,8 @@ function Docs() {
       <PageParagraph>
         This is a test of different Apollo Client query options.
       </PageParagraph>
-      <PageParagraph>
-        <H2Inline>What's stored in the cache</H2Inline>: Look under the{' '}
+      <H3PageParagraph heading="What's stored in the cache">
+        Look under the{' '}
         <Link
           href="https://www.apollographql.com/docs/react/development-testing/developer-tooling/"
           target="_blank"
@@ -171,12 +173,12 @@ function Docs() {
           ROOT_QUERY/book({'{'}"id":"1"{'}'})
         </code>{' '}
         etc.
-      </PageParagraph>
-      <PageParagraph>
-        <H2Inline>Loading states</H2Inline>: By default when you refetch or a
-        poll is triggered, our <code>loading</code> and{' '}
-        <code>networkStatus</code> don't change, meaning we can't display any
-        kind of loading indicators in these scenarios. If you set{' '}
+      </H3PageParagraph>
+      <H3PageParagraph heading="Loading states">
+        By default when you refetch or a poll is triggered, our{' '}
+        <code>loading</code> and <code>networkStatus</code> don't change,
+        meaning we can't display any kind of loading indicators in these
+        scenarios. If you set{' '}
         <Link
           href="https://www.apollographql.com/docs/react/data/queries#inspecting-loading-states"
           target="_blank"
@@ -185,7 +187,7 @@ function Docs() {
         </Link>{' '}
         to true then these attributes will be updated when a fetch is in
         progress.
-      </PageParagraph>
+      </H3PageParagraph>
       <PageParagraph>
         Also note that when <code>notifyOnNetworkStatusChange</code> is true and
         the component re-renders while new data is being fetched, the old data
