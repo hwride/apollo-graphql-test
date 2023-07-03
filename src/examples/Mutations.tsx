@@ -6,10 +6,7 @@ import { ControlGrid } from '../components/ui/ControlGrid.tsx'
 import { BoolLabelledSelect } from '../components/ui/LabelledSelect.tsx'
 import { Link } from '../components/ui/Link.tsx'
 import { Page } from '../components/ui/Page.tsx'
-import {
-  H3PageParagraph,
-  PageParagraph,
-} from '../components/ui/PageParagraph.tsx'
+import { H3PageParagraph, PageParagraph } from '../components/ui/PageParagraph'
 
 const GET_BOOKS = gql`
   query GetBooks {
