@@ -55,6 +55,7 @@ export function MutationsOptimisticUpdate() {
       <Docs />
 
       <ControlGrid>
+        <DelayServerSelect />
         <label htmlFor="bookId">Book ID</label>
         <TextInput
           id="bookId"
@@ -69,7 +70,6 @@ export function MutationsOptimisticUpdate() {
           value={newTitle}
           onChange={(e) => setNewTitle(e.target.value)}
         />
-        <DelayServerSelect />
       </ControlGrid>
       <div className="mx-auto my-4 flex w-fit flex-col items-center gap-1">
         <BorderButton

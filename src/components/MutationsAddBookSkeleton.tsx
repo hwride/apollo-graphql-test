@@ -39,6 +39,7 @@ export function MutationsAddBookSkeleton({
   return (
     <>
       <ControlGrid>
+        <DelayServerSelect />
         <BoolLabelledSelect
           label={
             <>
@@ -48,7 +49,6 @@ export function MutationsAddBookSkeleton({
           value={refetchGetBooks}
           onOptionChange={setRefetchGetBooks}
         />
-        <DelayServerSelect />
         {customControls}
       </ControlGrid>
       <div className="mx-auto my-4 flex w-fit flex-col items-center gap-1">

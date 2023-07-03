@@ -58,6 +58,7 @@ export function Queries() {
     <Page title="Queries">
       <Docs />
       <ControlGrid>
+        <DelayServerSelect />
         <LabelledSelect
           label="Book ID"
           selectClassName="font-mono"
@@ -104,7 +105,6 @@ export function Queries() {
         >
           {fetchPolicies}
         </LabelledSelect>
-        <DelayServerSelect />
         <BorderButton
           className="col-span-2 my-2 justify-self-center"
           onClick={() => refetch()}
