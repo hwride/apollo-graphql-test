@@ -3,7 +3,7 @@ export function Books({ booksData }: { booksData: any }) {
     <div className="mx-auto mb-2 w-fit">
       <h2 className="font-bold">Books</h2>
       {booksData != null && (
-        <ul>
+        <ul className="list-decimal pl-4">
           {booksData.books.map((book: any) => {
             return (
               <li key={book.id}>
