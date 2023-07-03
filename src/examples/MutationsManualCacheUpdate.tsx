@@ -47,6 +47,28 @@ export function MutationsManualCacheUpdate() {
   })
   const resetBooksMutation = useMutation(RESET_BOOKS, {
     refetchQueries,
+    update(cache, { data: { resetBooks } }) {
+      cache.modify({
+        fields: {
+          books() {
+            const newBookRefs = resetBooks.books.map((book: any) =>
+              cache.writeFragment({
+                data: book,
+                fragment: gql`
+                  fragment NewBook on Book {
+                    id
+                    title
+                    author
+                  }
+                `,
+              })
+            )
+            console.log(`newBookRefs: %o`, newBookRefs)
+            return newBookRefs
+          },
+        },
+      })
+    },
   })
 
   return (
