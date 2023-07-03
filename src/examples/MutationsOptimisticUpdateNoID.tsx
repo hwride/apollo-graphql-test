@@ -1,5 +1,4 @@
 import { gql, useMutation, useQuery } from '@apollo/client'
-import { useState } from 'react'
 import { Books } from '../components/Books.tsx'
 import { DelayServerSelect } from '../components/DelayServerSelect.tsx'
 import { getNextBookTitleSuffix } from '../components/MutationsAddBookSkeleton.tsx'
@@ -12,7 +11,6 @@ import { ADD_BOOK, GET_BOOKS, RESET_BOOKS } from './queries.ts'
 
 export function MutationsOptimisticUpdateNoID() {
   console.group('Mutations render')
-  const [delayMs, setDelayMs] = useState(2000)
   const { data: booksData, loading: getBooksLoading } = useQuery(GET_BOOKS, {
     notifyOnNetworkStatusChange: true,
   })
@@ -62,7 +60,7 @@ export function MutationsOptimisticUpdateNoID() {
       <Docs />
 
       <ControlGrid>
-        <DelayServerSelect delayMs={delayMs} setDelayMs={setDelayMs} />
+        <DelayServerSelect />
       </ControlGrid>
       <div className="mx-auto my-4 flex w-fit flex-col items-center gap-1">
         <BorderButton
@@ -73,10 +71,7 @@ export function MutationsOptimisticUpdateNoID() {
               author: 'New book author',
             }
             addBook({
-              variables: {
-                ...newBook,
-                delayMs,
-              },
+              variables: newBook,
               optimisticResponse: {
                 addBook: {
                   success: true,
@@ -93,14 +88,7 @@ export function MutationsOptimisticUpdateNoID() {
         >
           Add book
         </BorderButton>
-        <BorderButton
-          className="block"
-          onClick={() =>
-            resetBooks({
-              variables: { delayMs },
-            })
-          }
-        >
+        <BorderButton className="block" onClick={() => resetBooks()}>
           Reset books
         </BorderButton>
       </div>

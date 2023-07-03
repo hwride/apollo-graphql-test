@@ -3,6 +3,7 @@ import { Books } from '../components/Books.tsx'
 import { BorderButton } from '../components/ui/Button.tsx'
 import { ControlGrid } from '../components/ui/ControlGrid.tsx'
 import { BoolLabelledSelect } from '../components/ui/LabelledSelect.tsx'
+import { DelayServerSelect } from './DelayServerSelect.tsx'
 
 let nextBookTitle = 1
 export function getNextBookTitleSuffix() {
@@ -47,6 +48,7 @@ export function MutationsAddBookSkeleton({
           value={refetchGetBooks}
           onOptionChange={setRefetchGetBooks}
         />
+        <DelayServerSelect />
         {customControls}
       </ControlGrid>
       <div className="mx-auto my-4 flex w-fit flex-col items-center gap-1">

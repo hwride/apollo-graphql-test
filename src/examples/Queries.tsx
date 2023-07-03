@@ -1,5 +1,6 @@
 import { NetworkStatus, WatchQueryFetchPolicy, useQuery } from '@apollo/client'
 import { useState } from 'react'
+import { DelayServerSelect } from '../components/DelayServerSelect.tsx'
 import { BorderButton } from '../components/ui/Button.tsx'
 import { ControlGrid } from '../components/ui/ControlGrid.tsx'
 import {
@@ -103,6 +104,7 @@ export function Queries() {
         >
           {fetchPolicies}
         </LabelledSelect>
+        <DelayServerSelect />
         <BorderButton
           className="col-span-2 my-2 justify-self-center"
           onClick={() => refetch()}

@@ -14,13 +14,8 @@ import { TextInput } from '../components/ui/TextInput.tsx'
 import { GET_BOOK, GET_BOOKS, RESET_BOOKS } from './queries.ts'
 
 const UPDATE_BOOK = gql`
-  mutation UpdateBook(
-    $id: ID!
-    $title: String
-    $author: String
-    $delayMs: Int
-  ) {
-    updateBook(id: $id, title: $title, author: $author, delayMs: $delayMs) {
+  mutation UpdateBook($id: ID!, $title: String, $author: String) {
+    updateBook(id: $id, title: $title, author: $author) {
       success
       code
       book {
@@ -36,7 +31,6 @@ export function MutationsOptimisticUpdate() {
   console.group('Mutations render')
   const [bookId, setBookId] = useState('1')
   const [newTitle, setNewTitle] = useState('New title')
-  const [delayMs, setDelayMs] = useState(2000)
   const { data: bookData } = useQuery(GET_BOOK, {
     notifyOnNetworkStatusChange: true,
     variables: { bookId },
@@ -75,7 +69,7 @@ export function MutationsOptimisticUpdate() {
           value={newTitle}
           onChange={(e) => setNewTitle(e.target.value)}
         />
-        <DelayServerSelect delayMs={delayMs} setDelayMs={setDelayMs} />
+        <DelayServerSelect />
       </ControlGrid>
       <div className="mx-auto my-4 flex w-fit flex-col items-center gap-1">
         <BorderButton
@@ -87,10 +81,7 @@ export function MutationsOptimisticUpdate() {
               author: 'New book author',
             }
             updateBook({
-              variables: {
-                ...updatedBook,
-                delayMs,
-              },
+              variables: updatedBook,
               optimisticResponse: {
                 updateBook: {
                   success: true,
@@ -106,14 +97,7 @@ export function MutationsOptimisticUpdate() {
         >
           Update book
         </BorderButton>
-        <BorderButton
-          className="block"
-          onClick={() =>
-            resetBooks({
-              variables: { delayMs },
-            })
-          }
-        >
+        <BorderButton className="block" onClick={() => resetBooks()}>
           Reset books
         </BorderButton>
       </div>

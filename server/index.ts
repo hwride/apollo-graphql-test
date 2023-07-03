@@ -3,7 +3,12 @@
 // your data.
 import { ApolloServer } from '@apollo/server'
 import { startStandaloneServer } from '@apollo/server/standalone'
-import { delayHelper } from './utils.js'
+import { waitMs } from './utils.js'
+
+let delayMs = 2000
+async function delayHelper() {
+  await waitMs(delayMs)
+}
 
 const typeDefs = `#graphql
   # Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
@@ -46,11 +51,17 @@ const typeDefs = `#graphql
       message: String!
       books: [Book]
   }
+  type ServerDelayMutationResponse implements MutationResponse {
+      code: String!
+      success: Boolean!
+      message: String!
+  }
 
   type Mutation {
-      addBook(title: String, author: String, delayMs: Int): AddBookMutationResponse
-      updateBook(id: ID!, title: String, author: String, delayMs: Int): AddBookMutationResponse
-      resetBooks(delayMs: Int): ResetBooksMutationResponse
+      addBook(title: String, author: String): AddBookMutationResponse
+      updateBook(id: ID!, title: String, author: String): AddBookMutationResponse
+      resetBooks: ResetBooksMutationResponse
+      setServerDelay(delayMs: Int): ServerDelayMutationResponse
   }
 `
 
@@ -82,14 +93,20 @@ let books = JSON.parse(JSON.stringify(originalBooks))
 // This resolver retrieves books from the "books" array above.
 const resolvers = {
   Query: {
-    books: () => books,
-    book(parent, args) {
+    async books() {
+      await delayHelper()
+
+      return books
+    },
+    async book(parent, args) {
+      await delayHelper()
+
       return books.find((book) => book.id === args.id)
     },
   },
   Mutation: {
     async addBook(parent, args) {
-      await delayHelper(args)
+      await delayHelper()
 
       const newBook = { id: `${books.length + 1}`, ...args }
       books.push(newBook)
@@ -101,7 +118,7 @@ const resolvers = {
       }
     },
     async updateBook(parent, args) {
-      await delayHelper(args)
+      await delayHelper()
 
       const book = books.find((book) => book.id === args.id)
       if (book == null) {
@@ -121,8 +138,8 @@ const resolvers = {
         book,
       }
     },
-    async resetBooks(parent, args) {
-      await delayHelper(args)
+    async resetBooks() {
+      await delayHelper()
 
       books = JSON.parse(JSON.stringify(originalBooks))
       return {
@@ -130,6 +147,23 @@ const resolvers = {
         success: true,
         message: 'Books successfully reset',
         books,
+      }
+    },
+    async setServerDelay(parent, args) {
+      const delayMsNum = Number(args.delayMs)
+      if (isNaN(delayMsNum)) {
+        return {
+          code: '400',
+          success: false,
+          message: 'Invalid delayMs',
+        }
+      } else {
+        delayMs = delayMsNum
+        return {
+          code: '200',
+          success: true,
+          message: 'Updated server delay',
+        }
       }
     },
   },
