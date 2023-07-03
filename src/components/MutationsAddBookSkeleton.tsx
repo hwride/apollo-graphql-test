@@ -1,4 +1,5 @@
 import { gql } from '@apollo/client'
+import { ReactNode } from 'react'
 import { Books } from '../components/Books.tsx'
 import { BorderButton } from '../components/ui/Button.tsx'
 import { ControlGrid } from '../components/ui/ControlGrid.tsx'
@@ -51,12 +52,14 @@ export function MutationsAddBookSkeleton({
   resetBooksMutation,
   refetchGetBooks,
   setRefetchGetBooks,
+  customControls,
 }: {
   getBooksQuery: any
   addBookMutation: any
   resetBooksMutation: any
   refetchGetBooks: any
   setRefetchGetBooks: any
+  customControls?: ReactNode
 }) {
   const { data: booksData, loading: getBooksLoading } = getBooksQuery
   const [addBook, { data, loading, error, reset }] = addBookMutation
@@ -81,6 +84,7 @@ export function MutationsAddBookSkeleton({
           value={refetchGetBooks}
           onOptionChange={setRefetchGetBooks}
         />
+        {customControls}
       </ControlGrid>
       <div className="mx-auto my-4 flex w-fit flex-col items-center gap-1">
         <BorderButton

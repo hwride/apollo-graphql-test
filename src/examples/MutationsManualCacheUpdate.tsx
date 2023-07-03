@@ -6,6 +6,7 @@ import {
   MutationsAddBookSkeleton,
   RESET_BOOKS,
 } from '../components/MutationsAddBookSkeleton.tsx'
+import { BoolLabelledSelect } from '../components/ui/LabelledSelect.tsx'
 import { Link } from '../components/ui/Link.tsx'
 import { Page } from '../components/ui/Page.tsx'
 import {
@@ -19,6 +20,9 @@ export function MutationsManualCacheUpdate() {
     notifyOnNetworkStatusChange: true,
   })
   const [refetchGetBooks, setRefetchGetBooks] = useState(false)
+  const [includeOnQueryUpdated, setIncludeOnQueryUpdated] = useState(false)
+  const [refetchInsideOnQueryUpdated, setRefetchInsideOnQueryUpdated] =
+    useState(false)
   const refetchQueries = refetchGetBooks ? [GET_BOOKS] : undefined
   const addBookMutation = useMutation(ADD_BOOK, {
     refetchQueries,
@@ -50,12 +54,17 @@ export function MutationsManualCacheUpdate() {
         },
       })
     },
-    onQueryUpdated: (observableQuery) => {
-      console.log(
-        `useMutation(ADD_BOOK) onQueryUpdated - observableQuery: %o`,
-        observableQuery
-      )
-    },
+    onQueryUpdated: includeOnQueryUpdated
+      ? (observableQuery) => {
+          console.log(
+            `useMutation(ADD_BOOK) onQueryUpdated - observableQuery: %o`,
+            observableQuery
+          )
+          if (refetchInsideOnQueryUpdated) {
+            return observableQuery.refetch()
+          }
+        }
+      : undefined,
   })
   const resetBooksMutation = useMutation(RESET_BOOKS, {
     refetchQueries,
@@ -84,12 +93,17 @@ export function MutationsManualCacheUpdate() {
         },
       })
     },
-    onQueryUpdated: (observableQuery) => {
-      console.log(
-        `useMutation(RESET_BOOKS) onQueryUpdated - observableQuery: %o`,
-        observableQuery
-      )
-    },
+    onQueryUpdated: includeOnQueryUpdated
+      ? (observableQuery) => {
+          console.log(
+            `useMutation(RESET_BOOKS) onQueryUpdated - observableQuery: %o`,
+            observableQuery
+          )
+          if (refetchInsideOnQueryUpdated) {
+            return observableQuery.refetch()
+          }
+        }
+      : undefined,
   })
 
   return (
@@ -102,6 +116,28 @@ export function MutationsManualCacheUpdate() {
         resetBooksMutation={resetBooksMutation}
         refetchGetBooks={refetchGetBooks}
         setRefetchGetBooks={setRefetchGetBooks}
+        customControls={
+          <>
+            <BoolLabelledSelect
+              label={
+                <>
+                  Include <code>onQueryUpdated</code> callback
+                </>
+              }
+              value={includeOnQueryUpdated}
+              onOptionChange={setIncludeOnQueryUpdated}
+            />
+            <BoolLabelledSelect
+              label={
+                <>
+                  Refetch inside <code>onQueryUpdated</code>
+                </>
+              }
+              value={refetchInsideOnQueryUpdated}
+              onOptionChange={setRefetchInsideOnQueryUpdated}
+            />
+          </>
+        }
       />
     </Page>
   )
@@ -138,6 +174,25 @@ function Docs() {
         if you'd like to make doubly sure everything is in sync. In this case
         the refetch would overwrite local changes made if the data was
         different.
+      </H3PageParagraph>
+      <H3PageParagraph
+        heading={
+          <Link
+            href="https://www.apollographql.com/docs/react/data/mutations/#refetching-after-update"
+            target="_blank"
+          >
+            <code>onQueryUpdated</code>
+          </Link>
+        }
+      >
+        You can use this function to conditionally decide whether to refetch
+        queries or not. It will by default auto-detect related queries and pass
+        them to this function. If a query is missed you want to refetch, simply
+        add it to <code>refetchQueries</code> and it will be passed to this
+        function. Note if this callback is defined, no queries will refetched
+        even if defined in <code>refetchQueries</code>, unless you call{' '}
+        <code>observableQuery.refetch()</code> inside{' '}
+        <code>onQueryUpdated</code>.
       </H3PageParagraph>
     </>
   )
