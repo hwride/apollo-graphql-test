@@ -4,6 +4,7 @@ import { MutationsManualCacheUpdate } from './examples/MutationsManualCacheUpdat
 import { MutationsOptimisticUpdate } from './examples/MutationsOptimisticUpdate.tsx'
 import { MutationsOptimisticUpdateNoID } from './examples/MutationsOptimisticUpdateNoID.tsx'
 import { Queries } from './examples/Queries.tsx'
+import { QueriesMultipleQuickly } from './examples/QueriesMultipleQuickly.tsx'
 
 export type ConfigEntry = { id: string; label: string; Component: React.FC }
 export const componentConfig: ConfigEntry[] = [
@@ -18,6 +19,11 @@ export const componentConfig: ConfigEntry[] = [
     Component: Queries,
   },
   {
+    id: 'queries_multiple_quickly',
+    label: 'Queries - multiple quickly',
+    Component: QueriesMultipleQuickly,
+  },
+  {
     id: 'mutations',
     label: 'Mutations',
     Component: Mutations,
@@ -28,7 +34,7 @@ export const componentConfig: ConfigEntry[] = [
     Component: MutationsManualCacheUpdate,
   },
   {
-    id: 'mutations_optimisitc_update',
+    id: 'mutations_optimistic_update',
     label: 'Mutations - optimistic update',
     Component: MutationsOptimisticUpdate,
   },

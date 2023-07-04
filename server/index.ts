@@ -20,12 +20,17 @@ const typeDefs = `#graphql
     author: String
   }
 
+  type UniqueName {
+    name: String!
+  }
+
   # The "Query" type is special: it lists all of the available queries that
   # clients can execute, along with the return type for each. In this
   # case, the "books" query returns an array of zero or more Books (defined above).
   type Query {
     books: [Book]
     book(id: ID!): Book
+    uniqueName: UniqueName
   }
 
   interface MutationResponse {
@@ -89,6 +94,8 @@ const originalBooks = Object.freeze([
 ])
 let books = JSON.parse(JSON.stringify(originalBooks))
 
+let nameSuffix = 0
+
 // Resolvers define how to fetch the types defined in your schema.
 // This resolver retrieves books from the "books" array above.
 const resolvers = {
@@ -102,6 +109,13 @@ const resolvers = {
       await delayHelper()
 
       return books.find((book) => book.id === args.id)
+    },
+    async uniqueName() {
+      await delayHelper()
+
+      return {
+        name: 'Name ' + nameSuffix++,
+      }
     },
   },
   Mutation: {

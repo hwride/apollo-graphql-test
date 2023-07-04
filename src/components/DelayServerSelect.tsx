@@ -4,7 +4,7 @@ import { SET_SERVER_DELAY } from '../examples/queries.ts'
 import { LabelledSelect } from './ui/LabelledSelect.tsx'
 
 export function DelayServerSelect() {
-  const [delayMs, setDelayMs] = useState(2000)
+  const [delayMs, setDelayMs] = useState(1000)
   const [setServerDelay] = useMutation(SET_SERVER_DELAY, {
     variables: {
       delayMs,
@@ -28,7 +28,8 @@ export function DelayServerSelect() {
       <option value="1000">1000</option>
       <option value="2000">2000</option>
       <option value="3000">3000</option>
-      <option value="4000">4000</option>
+      <option value="5000">5000</option>
+      <option value="10000">10000</option>
     </LabelledSelect>
   )
 }
